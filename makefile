@@ -1,8 +1,7 @@
 CC=gcc
 FLAGS=-lm
 
-all: layer
-	rm -f bin/*.o
+all: dirs layer clean
 
 layer: bin/layer.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o
 	$(CC) $(FLAGS) bin/layer.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o -o bin/layer
@@ -21,6 +20,12 @@ bin/draw.o: src/draw.c
 
 bin/blocks.o: src/blocks.c
 	$(CC) -c src/blocks.c -o bin/blocks.o
+
+dirs:
+	mkdir -p bin
+
+installdirs:
+
 
 install:
 	
