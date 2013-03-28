@@ -1,13 +1,13 @@
 CC=gcc
 FLAGS=-lm
 
-all: dirs layer clean
+all: dirs main clean
 
-layer: bin/layer.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o
-	$(CC) $(FLAGS) bin/layer.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o -o bin/layer
+main: bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o
+	$(CC) $(FLAGS) bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o -o bin/main
 
-bin/layer.o: src/layer.c
-	$(CC) -c src/layer.c -o bin/layer.o
+bin/main.o: src/main.c
+	$(CC) -c src/main.c -o bin/main.o
 
 bin/nodes.o: src/nodes.c
 	$(CC) -c src/nodes.c -o bin/nodes.o
@@ -31,4 +31,4 @@ install:
 	
 
 clean:
-	rm -f bin/*
+	rm -f bin/*.o
