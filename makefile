@@ -22,5 +22,8 @@ bin/draw.o: src/draw.c
 bin/blocks.o: src/blocks.c
 	$(CC) -c src/blocks.c -o bin/blocks.o
 
+install:
+	
+
 clean:
 	rm -f bin/*
