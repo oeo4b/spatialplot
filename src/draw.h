@@ -12,6 +12,8 @@ typedef enum {
 
 typedef unsigned char Color;
 
+void initText(unsigned int);
+
 void drawLine(double*, double*, Block*, Linetype, unsigned char, Color);
 void drawPolygon(Polygon*, Block*, Linetype, unsigned char, Color);
 void drawPolygons(Node*, Block*, unsigned int);

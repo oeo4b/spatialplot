@@ -8,6 +8,10 @@
 
 static unsigned int dashed = 0;
 
+void initText(unsigned int size) {
+
+}
+
 void drawLine(
   double* X, double* Y, Block* block, 
   Linetype lty, unsigned char lwd, Color color
@@ -79,13 +83,22 @@ void drawText(double x, double y, unsigned char* text, unsigned int n, Block* bl
 }
 
 void drawLabels(Node* node, Block* block, unsigned int level) {
-
+  unsigned int i;
+  if(node->flag!=1) {
+    if(block->xlim[0]<node->bbox[2] && 
+       node->bbox[0]<block->xlim[1] &&
+       block->ylim[0]<node->bbox[3] && 
+       node->bbox[1]<block->ylim[1])
+      drawText(node->xy[0], node->xy[1], node->name, node->nchar, block);
+  }
+  for(i=0;i<node->n;i++)
+    drawLabels(&node->child[i], block, level+1);
 }
 
 int strwidth(unsigned char* text, unsigned int n) {
-
+  return 1;
 }
 
 int strheight(unsigned char* text, unsigned int n) {
-
+  return 1;
 }

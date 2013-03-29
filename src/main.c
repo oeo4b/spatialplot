@@ -45,6 +45,11 @@ void layer(int argc, char** argv) {
   readNodes(&root, file, 3);
   ytransNodes(&root);
 
+  /* Create label bounds and omit overlaps */
+  initText(4);
+  bindLabels(&root, &block, 5);
+  treeLabels(&root, &root);
+
   /* Draw nodes to block */
   drawPolygons(&root, &block, 0);
   drawLabels(&root, &block, 0);
