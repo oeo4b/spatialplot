@@ -1,6 +1,5 @@
-/**
- * layer
- * Usage: level x y [options]
+/*
+ * usage: level x y [options]
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -10,8 +9,7 @@
 
 const char path[] = "/";
 
-int main(int argc, char** argv) {
-  if(argc<4) return 1;
+void layer(int argc, char** argv) {
   /* Block properties */
   Block block;
   block.level = atoi(argv[1]);
@@ -32,6 +30,22 @@ int main(int argc, char** argv) {
 
   /* Print to stdout */
   printBlock(&block);
+}
+
+void interpolate(int argc, char** argv) {
+
+}
+
+int main(int argc, char** argv) {
+  if(argc<2) {
+    
+  }
+  else if(strcmp(argv[1], "layer"))
+    layer(argc, argv);
+  else if(strcmp(argv[1], "interpolate"))
+    interpolate(argc, argv);
+  else
+    printf("git: '%s' is not a spatialplot command. See 'spatialplot --help'.\n", argv[1]);
 
   return 0;
 }
