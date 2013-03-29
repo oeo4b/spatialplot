@@ -1,5 +1,5 @@
 CC=gcc
-FLAGS=-lm
+FLAGS=-lm 
 
 all: dirs main clean
 
@@ -25,7 +25,7 @@ dirs:
 	mkdir -p bin
 
 installdirs:
-
+	
 
 install:
 	
