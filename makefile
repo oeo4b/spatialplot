@@ -3,8 +3,8 @@ FLAGS=-lm
 
 all: dirs main clean
 
-main: bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o
-	$(CC) $(FLAGS) bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o -o spatialplot
+main: bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o bin/labels.o
+	$(CC) $(FLAGS) bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o bin/labels.o -o spatialplot
 
 bin/main.o: src/main.c
 	$(CC) -c src/main.c -o bin/main.o
@@ -20,6 +20,9 @@ bin/draw.o: src/draw.c
 
 bin/blocks.o: src/blocks.c
 	$(CC) -c src/blocks.c -o bin/blocks.o
+
+bin/labels.o: src/labels.c
+	$(CC) -c src/labels.c -o bin/labels.o
 
 dirs:
 	mkdir -p bin

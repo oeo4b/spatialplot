@@ -54,13 +54,13 @@ void drawPolygon(
   drawLine(x, y, block, lty, lwd, color);
 }
 
-void drawNodes(Node* node, Block* block, unsigned int level) {
+void drawPolygons(Node* node, Block* block, unsigned int level) {
   unsigned int i, j = 0;
-  if(level==1)
-    j = thresholdChildNodes(node, block, 0.5);
-  if(!j)
+  if(level>0 && node->n>0)
+    j = thresholdChildNodes(node, block, 0.01);
+  if(!j) /* Conditionally include descendants */
     for(i=0;i<node->n;i++)
-      drawNodes(&node->child[i], block, level+1);
+      drawPolygons(&node->child[i], block, level+1);
   for(i=0;i<node->npoly;i++)
     if(block->xlim[0]<node->polygons[i].bbox[2] && 
        node->polygons[i].bbox[0]<block->xlim[1] &&
@@ -71,4 +71,21 @@ void drawNodes(Node* node, Block* block, unsigned int level) {
       if(level==2)
         drawPolygon(&node->polygons[i], block, DASHED, 1, 200);
     }
+}
+
+
+void drawText(double x, double y, unsigned char* text, unsigned int n, Block* block) {
+
+}
+
+void drawLabels(Node* node, Block* block, unsigned int level) {
+
+}
+
+int strwidth(unsigned char* text, unsigned int n) {
+
+}
+
+int strheight(unsigned char* text, unsigned int n) {
+
 }

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "nodes.h"
+#include "blocks.h"
 
 void treeNodes(Node* node, FILE*** filestreams, unsigned int level) {
   unsigned int i;
@@ -93,5 +94,16 @@ void printNodes(Node* node) {
 }
 
 int thresholdChildNodes(Node* parent, Block* block, double threshold) {
-
+  unsigned int i, j, n;
+  double area = pow(block->depth, 2)*threshold;
+  double sum = 0;
+  for(i=0,n=0;i<parent->n;i++)
+    for(j=0;j<parent->child[i].npoly;j++,n++)
+      sum += ((parent->child[i].polygons[j].bbox[2]-
+               parent->child[i].polygons[j].bbox[0])*
+              (parent->child[i].polygons[j].bbox[3]-
+               parent->child[i].polygons[j].bbox[1]));
+  if(n==0) return 1;
+  if((sum/(double)n)<area) return 1;
+  return 0;
 }
