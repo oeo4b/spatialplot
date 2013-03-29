@@ -1,10 +1,15 @@
+SHELL=/bin/sh
 CC=gcc
-FLAGS=-lm 
+CFLAGS=-lm 
+ALL_CFLAGS=-I. $(CFLAGS)
+INSTALL=install
+INSTALL_PROGRAM=$(INSTALL)
+INSTALL_DATA=${INSTALL} -m 644
 
 all: dirs main clean
 
 main: bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o bin/labels.o
-	$(CC) $(FLAGS) bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o bin/labels.o -o spatialplot
+	$(CC) $(ALL_CFLAGS) bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o bin/labels.o -o spatialplot
 
 bin/main.o: src/main.c
 	$(CC) -c src/main.c -o bin/main.o
