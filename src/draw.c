@@ -17,13 +17,8 @@ void drawPolygon(
 
 }
 
-void drawPolygons(
-  Node* node, Block* block, 
-  Linetype lty, unsigned char lwd, Color color
-) {
-
-}
-
 void drawNodes(Node* root, Block* block) {
-
+  unsigned int i;
+  for(i=0;i<node->n;i++)
+    drawNodes(&node->child[i], block);
 }

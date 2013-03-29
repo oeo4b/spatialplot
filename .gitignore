@@ -1,2 +1,5 @@
 *~
 bin/*
+features/*
+grid/*
+spatialplot

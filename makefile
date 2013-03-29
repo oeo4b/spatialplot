@@ -4,7 +4,7 @@ FLAGS=-lm
 all: dirs main clean
 
 main: bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o
-	$(CC) $(FLAGS) bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o -o bin/main
+	$(CC) $(FLAGS) bin/main.o bin/nodes.o bin/polygons.o bin/draw.o bin/blocks.o -o spatialplot
 
 bin/main.o: src/main.c
 	$(CC) -c src/main.c -o bin/main.o
@@ -23,6 +23,8 @@ bin/blocks.o: src/blocks.c
 
 dirs:
 	mkdir -p bin
+	mkdir -p features
+	mkdir -p grid
 
 installdirs:
 	

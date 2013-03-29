@@ -16,7 +16,6 @@ typedef struct {
 
 void drawLine(double**, Block*, Linetype, unsigned char, Color);
 void drawPolygon(Polygon*, Block*, Linetype, unsigned char, Color);
-void drawPolygons(Node*, Block*, Linetype, unsigned char, Color);
 void drawNodes(Node*, Block*);
 
 #endif
