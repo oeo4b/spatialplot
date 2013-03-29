@@ -2,6 +2,7 @@
 #define NODES_H
 #include <stdio.h>
 #include "polygons.h"
+#include "blocks.h"
 
 typedef struct Node {
   unsigned char flag;
@@ -20,5 +21,6 @@ void treeNodes(Node*, FILE***, unsigned int);
 void ytrans(double*);
 void ytransNodes(Node*);
 void printNodes(Node*);
+int thresholdChildNodes(Node*, Block*, double);
 
 #endif

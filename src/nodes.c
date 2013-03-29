@@ -91,3 +91,7 @@ void printNodes(Node* node) {
   for(i=0;i<node->n;i++)
     printNodes(&node->child[i]);
 }
+
+int thresholdChildNodes(Node* parent, Block* block, double threshold) {
+
+}

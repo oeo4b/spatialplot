@@ -55,9 +55,12 @@ void drawPolygon(
 }
 
 void drawNodes(Node* node, Block* block, unsigned int level) {
-  unsigned int i;
-  for(i=0;i<node->n;i++)
-    drawNodes(&node->child[i], block, level+1);
+  unsigned int i, j = 0;
+  if(level==1)
+    j = thresholdChildNodes(node, block, 0.5);
+  if(!j)
+    for(i=0;i<node->n;i++)
+      drawNodes(&node->child[i], block, level+1);
   for(i=0;i<node->npoly;i++)
     if(block->xlim[0]<node->polygons[i].bbox[2] && 
        node->polygons[i].bbox[0]<block->xlim[1] &&
@@ -65,8 +68,7 @@ void drawNodes(Node* node, Block* block, unsigned int level) {
        node->polygons[i].bbox[1]<block->ylim[1]) {
       if(level==1)
         drawPolygon(&node->polygons[i], block, SOLID, 1, 50);
-      else if(level==2) {
+      if(level==2)
         drawPolygon(&node->polygons[i], block, DASHED, 1, 200);
-      }
     }
 }
