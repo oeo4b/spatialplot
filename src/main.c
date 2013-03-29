@@ -37,7 +37,7 @@ void layer(int argc, char** argv) {
   unsigned int i, j;
   for(i=0;i<CELL;i++)
     for(j=0;j<CELL;j++)
-      block.block[i*CELL+j] = 0;
+      block.block[i*CELL+j] = 255;
   
   /* Read nodes */
   char* file[] = { "countries", "states", "cities" };

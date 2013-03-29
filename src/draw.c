@@ -65,7 +65,8 @@ void drawNodes(Node* node, Block* block, unsigned int level) {
        node->polygons[i].bbox[1]<block->ylim[1]) {
       if(level==1)
         drawPolygon(&node->polygons[i], block, SOLID, 1, 50);
-      else if(level==2)
+      else if(level==2) {
         drawPolygon(&node->polygons[i], block, DASHED, 1, 200);
+      }
     }
 }
