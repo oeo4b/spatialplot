@@ -14,6 +14,6 @@ typedef unsigned char Color;
 
 void drawLine(double*, double*, Block*, Linetype, unsigned char, Color);
 void drawPolygon(Polygon*, Block*, Linetype, unsigned char, Color);
-void drawNodes(Node*, Block*);
+void drawNodes(Node*, Block*, unsigned int);
 
 #endif

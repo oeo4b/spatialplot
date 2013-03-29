@@ -32,14 +32,21 @@ void layer(int argc, char** argv) {
   block.xlim[1] = (-180.0)+(double)(block.x+1)*block.depth;
   block.ylim[0] = (-180.0)+(double)block.y*block.depth;
   block.ylim[1] = (-180.0)+(double)(block.y+1)*block.depth;
+
+  /* Zero block */
+  unsigned int i, j;
+  for(i=0;i<CELL;i++)
+    for(j=0;j<CELL;j++)
+      block.block[i*CELL+j] = 0;
   
   /* Read nodes */
   char* file[] = { "countries", "states", "cities" };
   Node root;
   readNodes(&root, file, 3);
+  ytransNodes(&root);
 
   /* Draw nodes to block */
-  drawNodes(&root, &block);
+  drawNodes(&root, &block, 0);
 
   /* Print to stdout */
   printBlock(&block);

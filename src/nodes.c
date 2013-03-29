@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "nodes.h"
 
 void treeNodes(Node* node, FILE*** filestreams, unsigned int level) {
@@ -63,6 +64,25 @@ void readNodes(Node* root, char** file, unsigned int n) {
     for(j=0;j<4;j++)
       fclose(nodef[i][j]);
   free(nodef);
+}
+
+void ytrans(double* y) {
+  *y = (180.0/3.14159265359) * log(tan(3.14159265359*(0.25 + *y/360.0)));
+}
+
+void ytransNodes(Node* node) { /* Latitude transformation - Mercator projection */
+  unsigned int i, j;
+  ytrans(&node->xy[1]);
+  ytrans(&node->bbox[1]);
+  ytrans(&node->bbox[3]);
+  for(i=0;i<node->npoly;i++) {
+    ytrans(&node->polygons[i].bbox[1]);
+    ytrans(&node->polygons[i].bbox[3]);
+    for(j=0;j<node->polygons[i].n;j++)
+      ytrans(&node->polygons[i].y[j]);
+  }
+  for(i=0;i<node->n;i++)
+    ytransNodes(&node->child[i]);
 }
 
 void printNodes(Node* node) {

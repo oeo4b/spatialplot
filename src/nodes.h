@@ -17,6 +17,8 @@ typedef struct Node {
 
 void readNodes(Node*, char**, unsigned int);
 void treeNodes(Node*, FILE***, unsigned int);
+void ytrans(double*);
+void ytransNodes(Node*);
 void printNodes(Node*);
 
 #endif
