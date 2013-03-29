@@ -9,7 +9,7 @@ typedef struct {
   unsigned int y;
   double xlim[2];
   double ylim[2];
-  unsigned char block[65536]; /* 256 * 256 */  
+  unsigned char block[CELL*CELL]; /* 256 * 256 */  
 } Block;
 
 void printBlock(Block*);
