@@ -10,11 +10,9 @@ typedef enum {
   DOTTED
 } Linetype;
 
-typedef struct {
+typedef unsigned char Color;
 
-} Color;
-
-void drawLine(double**, Block*, Linetype, unsigned char, Color);
+void drawLine(double*, double*, Block*, Linetype, unsigned char, Color);
 void drawPolygon(Polygon*, Block*, Linetype, unsigned char, Color);
 void drawNodes(Node*, Block*);
 
