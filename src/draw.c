@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <ft2build.h>
+#include FT_FREETYPE_H
 #include "draw.h"
 #include "blocks.h"
 #include "nodes.h"
@@ -8,8 +10,17 @@
 
 static unsigned int dashed = 0;
 
-void initText(unsigned int size) {
+/* Freetype globals */
+FT_Library library;
+FT_Face face;
 
+void initText(unsigned int size) {
+  int error;
+  error = FT_Init_FreeType(&library);
+  if(error) return;
+  error = FT_New_Face(library, "/Library/Fonts/Arial.ttf", 0, &face);
+  if(error==FT_Err_Unknown_File_Format) return;
+  else if(error) return;
 }
 
 void drawLine(
@@ -62,9 +73,10 @@ void drawPolygons(Node* node, Block* block, unsigned int level) {
   unsigned int i, j = 0;
   if(level>0 && node->n>0)
     j = thresholdChildNodes(node, block, 0.01);
-  if(!j) /* Conditionally include descendants */
+  if(!j) { /* Conditionally include descendants */
     for(i=0;i<node->n;i++)
       drawPolygons(&node->child[i], block, level+1);
+  }
   for(i=0;i<node->npoly;i++)
     if(block->xlim[0]<node->polygons[i].bbox[2] && 
        node->polygons[i].bbox[0]<block->xlim[1] &&

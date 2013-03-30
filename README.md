@@ -11,5 +11,11 @@ make
 sudo make install
 ```
 
+## Dependencies
 
+Freetype (http://www.freetype.org/) is required to render text.
+
+## License
+
+GPL
 
