@@ -19,8 +19,10 @@ void initText(unsigned int size) {
   error = FT_Init_FreeType(&library);
   if(error) return;
   error = FT_New_Face(library, "/Library/Fonts/Arial.ttf", 0, &face);
-  if(error==FT_Err_Unknown_File_Format) return;
-  else if(error) return;
+  if(error) return;
+  error = FT_Set_Char_Size(face, 0, size*64, CELL, CELL);   
+  if(error) return;
+  return;
 }
 
 void drawLine(
@@ -89,28 +91,82 @@ void drawPolygons(Node* node, Block* block, unsigned int level) {
     }
 }
 
+void drawText(double x, double y, unsigned long* text, unsigned int n, Block* block) {
+  int i, j, k, error, X, Y;
+  int originx = floor((double)CELL*(x-block->xlim[0])/block->depth);
+  int originy = floor((double)CELL*(y-block->ylim[0])/block->depth);
+  FT_UInt glyph_index;
 
-void drawText(double x, double y, unsigned char* text, unsigned int n, Block* block) {
+  for(i=0,j=0;i<n;i++) {
+    glyph_index = FT_Get_Char_Index(face, text[i]);
+    error = FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT);
+    if(error) return;
+    error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
+    if(error) return;
+    j += face->glyph->metrics.horiAdvance/64;
+  }
+  originx -= j/2;
 
+  for(i=0;i<n;i++) {
+    glyph_index = FT_Get_Char_Index(face, text[i]);
+    error = FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT);
+    if(error) return;
+    error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
+    if(error) return;
+    for(j=0;j<face->glyph->bitmap.rows;j++)
+      for(k=0;k<face->glyph->bitmap.width;k++) {
+        X = originx+face->glyph->metrics.horiBearingX/64+k;
+        Y = originy+face->glyph->metrics.horiBearingY/64-j;
+        if(X>=0 && X<CELL && Y>=0 && Y<CELL) {
+          block->block[X*CELL+Y] = 255 - face->glyph->bitmap.buffer[j*face->glyph->bitmap.width+k];
+	}
+      }
+    originx += face->glyph->metrics.horiAdvance/64;
+  }
 }
 
 void drawLabels(Node* node, Block* block, unsigned int level) {
   unsigned int i;
+  static unsigned long chartolong[100];
   if(node->flag!=1) {
     if(block->xlim[0]<node->bbox[2] && 
        node->bbox[0]<block->xlim[1] &&
        block->ylim[0]<node->bbox[3] && 
-       node->bbox[1]<block->ylim[1])
-      drawText(node->xy[0], node->xy[1], node->name, node->nchar, block);
+       node->bbox[1]<block->ylim[1]) {
+      for(i=0;i<node->nchar;i++)
+        chartolong[i] = (unsigned long)node->name[i];
+      drawText(node->xy[0], node->xy[1], chartolong, node->nchar, block);
+    }
   }
   for(i=0;i<node->n;i++)
     drawLabels(&node->child[i], block, level+1);
 }
 
 int strwidth(unsigned char* text, unsigned int n) {
-  return 1;
+  int i, j, error;
+  FT_UInt glyph_index;
+  for(i=0,j=0;i<n;i++) {
+    glyph_index = FT_Get_Char_Index(face, text[i]);
+    error = FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT);
+    if(error) return 0;
+    error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
+    if(error) return 0;
+    j += face->glyph->metrics.horiAdvance/64;
+  }
+  return j;
 }
 
 int strheight(unsigned char* text, unsigned int n) {
-  return 1;
+  int i, j, error;
+  FT_UInt glyph_index;
+  for(i=0,j=0;i<n;i++) {
+    glyph_index = FT_Get_Char_Index(face, text[i]);
+    error = FT_Load_Glyph(face, glyph_index, FT_LOAD_DEFAULT);
+    if(error) return 0;
+    error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
+    if(error) return 0;
+    if((face->glyph->metrics.horiBearingY/64) > j) 
+      j = face->glyph->metrics.horiBearingY/64;
+  }
+  return j;
 }

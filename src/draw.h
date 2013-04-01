@@ -17,7 +17,7 @@ void initText(unsigned int);
 void drawLine(double*, double*, Block*, Linetype, unsigned char, Color);
 void drawPolygon(Polygon*, Block*, Linetype, unsigned char, Color);
 void drawPolygons(Node*, Block*, unsigned int);
-void drawText(double, double, unsigned char*, unsigned int, Block*);
+void drawText(double, double, unsigned long*, unsigned int, Block*);
 void drawLabels(Node*, Block*, unsigned int);
 
 int strwidth(unsigned char*, unsigned int);
