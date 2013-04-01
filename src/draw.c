@@ -18,7 +18,7 @@ void initText(unsigned int size) {
   int error;
   error = FT_Init_FreeType(&library);
   if(error) return;
-  error = FT_New_Face(library, "/Library/Fonts/Arial.ttf", 0, &face);
+  error = FT_New_Face(library, "/usr/openwin/lib/X11/fonts/TrueType/Arial.ttf", 0, &face);
   if(error) return;
   error = FT_Set_Char_Size(face, 0, size*64, CELL, CELL);   
   if(error) return;
@@ -89,6 +89,7 @@ void drawPolygons(Node* node, Block* block, unsigned int level) {
       if(level==2)
         drawPolygon(&node->polygons[i], block, DASHED, 1, 200);
     }
+  node->flag = 0;
 }
 
 void drawText(double x, double y, unsigned long* text, unsigned int n, Block* block) {

@@ -8,8 +8,14 @@
 #include "nodes.h"
 #include "blocks.h"
 
-void readFeatures(unsigned int n, double** features) {
-
+void readFeatures(unsigned int n, double** features, FILE* stream) {
+  unsigned int i, j;
+  char point[100];
+  for(i=0;i<3;i++)
+    for(j=0;j<n;j++) {
+      fgets(point, 100, stream); 
+      features[i][j] = atof(point);
+    }
 }
 
 void help(void) {
@@ -48,14 +54,14 @@ void layer(int argc, char** argv) {
   Node root;
   readNodes(&root, file, 3);
   ytransNodes(&root);
-
-  /* Create label bounds and omit overlaps */
   initText(4);
-  bindLabels(&root, &block, 5);
-  treeLabels(&root, &root);
+  bindLabels(&root, &block, 10);
 
-  /* Draw nodes to block */
+  /* Draw polygons to block */
   drawPolygons(&root, &block, 0);
+
+  /* Omit label overlaps and draw to block */
+  treeLabels(&root, &root);
   drawLabels(&root, &block, 0);
 
   /* Print to stdout */
@@ -91,7 +97,13 @@ void interpolate(int argc, char** argv) {
   double* features[3];
   for(i=0;i<3;i++)
     features[i] = (double*)malloc(sizeof(double)*n);
-  readFeatures(n, features);
+  readFeatures(n, features, stdin);
+  
+  /* Model fitting */
+
+  /* Read in block */
+
+  /* Prediction */
 
   /* Print to stdout */
   printBlock(&block);

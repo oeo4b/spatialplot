@@ -12,7 +12,7 @@ void bindLabels(Node* node, Block* block, unsigned int pad) {
   node->bbox[1] = node->xy[1] - pixel*(pad);
   node->bbox[2] = node->xy[0] + pixel*(strwidth(node->name, node->nchar)/2+pad);
   node->bbox[3] = node->xy[1] + pixel*(strheight(node->name, node->nchar)+pad);
-  node->flag = 0;
+  node->flag = 1;
   for(i=0;i<node->n;i++)
     bindLabels(&node->child[i], block, pad);
 }
