@@ -8,6 +8,10 @@
 #include "nodes.h"
 #include "blocks.h"
 
+void readFeatures(unsigned int n, double** features) {
+
+}
+
 void help(void) {
   printf("usage: spatialplot [--version] [--help] <command> [<args>]\n\n"
          "Commands:\n"
@@ -59,9 +63,9 @@ void layer(int argc, char** argv) {
 }
 
 void interpolate(int argc, char** argv) {
-  if(argc<5) {
+  if(argc<6) {
     printf("You must specify the block properties.\n\n"
-           "usage: spatialplot interpolate <level> <x> <y>\n");
+           "usage: spatialplot interpolate <level> <x> <y> <n> [<model>]\n");
     return;
   }
 
@@ -82,9 +86,18 @@ void interpolate(int argc, char** argv) {
     for(j=0;j<CELL;j++)
       block.block[i*CELL+j] = 255;
 
+  /* Read in features */
+  unsigned int n = atoi(argv[5]);
+  double* features[3];
+  for(i=0;i<3;i++)
+    features[i] = (double*)malloc(sizeof(double)*n);
+  readFeatures(n, features);
+
   /* Print to stdout */
   printBlock(&block);
 
+  /* Dealloc */
+  free(features);
 }
 
 int main(int argc, char** argv) {

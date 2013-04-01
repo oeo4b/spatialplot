@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo "SHELL=$SHELL" > Makefile
+echo "CC=gcc" >> Makefile
+echo "CFLAGS=`freetype-config --cflags`" >> Makefile
+echo "LIBS=`freetype-config --libs` -lm" >> Makefile
+echo "INSTALL=install" >> Makefile
+echo -e "\nall: dirs main clean\n" >> Makefile
+SRC=$(printf "%s\n" "`ls -d src/* | grep c$`")
+echo main: $SRC >> Makefile
+echo -e "\t" "\$(CC) \$(CFLAGS) \$(LIBS)" $SRC "-o spatialplot" >> Makefile
+echo -e "dirs:\n\tmkdir -p bin\n\tmkdir -p features\n\tmkdir -p grid" >> Makefile
+echo -e "installdirs:\n\t" >> Makefile
+echo -e "install:\n\t" >> Makefile
+echo -e "clean:\n\trm -f bin/*.o" >> Makefile
