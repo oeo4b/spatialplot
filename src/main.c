@@ -7,15 +7,23 @@
 #include <math.h>
 #include "nodes.h"
 #include "blocks.h"
+#include "model.h"
 
-void readFeatures(unsigned int n, double** features, FILE* stream) {
-  unsigned int i, j;
+void readFeatures(Features* features, FILE* stream) {
+  unsigned int i;
   char point[100];
-  for(i=0;i<3;i++)
-    for(j=0;j<n;j++) {
-      fgets(point, 100, stream); 
-      features[i][j] = atof(point);
-    }
+  for(i=0;i<features->n;i++) {
+    fgets(point, 100, stream);
+    features->X[0][i] = atof(point);
+  }
+  for(i=0;i<features->n;i++) {
+    fgets(point, 100, stream);
+    features->X[1][i] = atof(point);
+  }
+  for(i=0;i<features->n;i++) {
+    fgets(point, 100, stream);
+    features->y[i] = atof(point);
+  }
 }
 
 void help(void) {
@@ -92,29 +100,27 @@ void interpolate(int argc, char** argv) {
     for(j=0;j<CELL;j++)
       block.block[i*CELL+j] = 0;
 
-  /* Read in features */
-  unsigned int n = atoi(argv[5]);
-  double* features[3];
-  for(i=0;i<3;i++)
-    features[i] = (double*)malloc(sizeof(double)*n);
-  readFeatures(n, features, stdin);
-  
-  /* Model fitting */
-
   /* Read/write block */
   if(readBlock(&block)) {
     createBlock(&block);
     writeBlock(&block);
   }
 
-  /* Prediction */
+  /* Read in features */
+  Features features;
+  features.n = atoi(argv[5]);
+  features.y = (double*)malloc(sizeof(double)*features.n);
+  for(i=0;i<2;i++)
+    features.X[i] = (double*)malloc(sizeof(double)*features.n);
+  readFeatures(&features, stdin);
+  
+  /* Model fitting/prediction */
+  Model model;
+  fit(&features, &model, EXPONENTIAL);
+  predict(&block, &model);
 
   /* Print to stdout */
   printBlock(&block);
-
-  /* Dealloc */
-  for(i=0;i<3;i++)
-    free(features[i]);
 }
 
 int main(int argc, char** argv) {
