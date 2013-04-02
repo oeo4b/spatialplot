@@ -107,3 +107,7 @@ int thresholdChildNodes(Node* parent, Block* block, double threshold) {
   if((sum/(double)n)<area) return 1;
   return 0;
 }
+
+void freeNodes(Node* node) {
+
+}

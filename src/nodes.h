@@ -22,5 +22,6 @@ void ytrans(double*);
 void ytransNodes(Node*);
 void printNodes(Node*);
 int thresholdChildNodes(Node*, Block*, double);
+void freeNodes(Node*);
 
 #endif

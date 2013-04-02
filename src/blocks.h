@@ -12,6 +12,9 @@ typedef struct {
   unsigned char block[CELL*CELL]; /* 256 * 256 */  
 } Block;
 
+int readBlock(Block*);
+void createBlock(Block*);
+void writeBlock(Block*);
 void printBlock(Block*);
 
 #endif

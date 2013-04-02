@@ -101,15 +101,20 @@ void interpolate(int argc, char** argv) {
   
   /* Model fitting */
 
-  /* Read in block */
+  /* Read/write block */
+  if(readBlock(&block)) {
+    createBlock(&block);
+    writeBlock(&block);
+  }
 
   /* Prediction */
 
   /* Print to stdout */
-  printBlock(&block);
+  //printBlock(&block);
 
   /* Dealloc */
-  free(features);
+  for(i=0;i<3;i++)
+    free(features[i]);
 }
 
 int main(int argc, char** argv) {
