@@ -87,10 +87,10 @@ void interpolate(int argc, char** argv) {
   block.ylim[1] = (-180.0)+(double)(block.y+1)*block.depth;
 
   /* Zero block */
-  unsigned int i, j;
+  int i, j;
   for(i=0;i<CELL;i++)
     for(j=0;j<CELL;j++)
-      block.block[i*CELL+j] = 255;
+      block.block[i*CELL+j] = 0;
 
   /* Read in features */
   unsigned int n = atoi(argv[5]);
@@ -110,7 +110,7 @@ void interpolate(int argc, char** argv) {
   /* Prediction */
 
   /* Print to stdout */
-  //printBlock(&block);
+  printBlock(&block);
 
   /* Dealloc */
   for(i=0;i<3;i++)
