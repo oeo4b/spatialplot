@@ -17,18 +17,19 @@ typedef enum {
   EXPONENTIAL
 } Variogram;
 
-typedef struct {
+typedef struct Model {
   Features* training;
   Variogram type;
   double nugget;
   double range;
   double sill;
+  double (*kernel)(double, struct Model*);
 } Model;
 
-double linear(double, double, double, double);
-double spherical(double, double, double, double);
-double gaussian(double, double, double, double);
-double exponential(double, double, double, double);
+double linear(double, Model*);
+double spherical(double, Model*);
+double gaussian(double, Model*);
+double exponential(double, Model*);
 void fit(Features*, Model*, Variogram);
 void predict(Block*, Model*);
 
