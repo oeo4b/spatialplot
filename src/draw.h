@@ -10,12 +10,9 @@ typedef enum {
   DOTTED
 } Linetype;
 
-typedef unsigned char Color;
-
 void initText(unsigned int);
-
-void drawLine(double*, double*, Block*, Linetype, unsigned char, Color);
-void drawPolygon(Polygon*, Block*, Linetype, unsigned char, Color);
+void drawLine(double*, double*, Block*, Linetype, unsigned char, unsigned char);
+void drawPolygon(Polygon*, Block*, Linetype, unsigned char, unsigned char);
 void drawPolygons(Node*, Block*, unsigned int);
 void drawText(double, double, unsigned long*, unsigned int, Block*);
 void drawLabels(Node*, Block*, unsigned int);

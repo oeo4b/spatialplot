@@ -8,6 +8,7 @@
 #include "nodes.h"
 #include "blocks.h"
 #include "model.h"
+#include "color.h"
 
 void readFeatures(Features* features, FILE* stream) {
   unsigned int i;
@@ -73,7 +74,12 @@ void layer(int argc, char** argv) {
   drawLabels(&root, &block, 0);
 
   /* Print to stdout */
-  printBlock(&block);
+  Color* spectrum = (Color*)malloc(sizeof(Color)*256);
+  greycolors(spectrum, 256);
+  printBlock(&block, spectrum);
+
+  /* Dealloc */
+  free(spectrum);
 }
 
 void interpolate(int argc, char** argv) {
@@ -120,7 +126,12 @@ void interpolate(int argc, char** argv) {
   predict(&block, &model);
 
   /* Print to stdout */
-  printBlock(&block);
+  Color* spectrum = (Color*)malloc(sizeof(Color)*256);
+  heatcolors(spectrum, 256);
+  printBlock(&block, spectrum);
+
+  /* Dealloc */
+  free(spectrum);
 }
 
 int main(int argc, char** argv) {

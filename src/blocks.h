@@ -1,6 +1,7 @@
 #ifndef BLOCKS_H
 #define BLOCKS_H
 #define CELL 256
+#include "color.h"
 
 typedef struct {
   unsigned int level;
@@ -15,6 +16,6 @@ typedef struct {
 int readBlock(Block*);
 void createBlock(Block*);
 void writeBlock(Block*);
-void printBlock(Block*);
+void printBlock(Block*, Color*);
 
 #endif

@@ -5,6 +5,7 @@
 #include "blocks.h"
 #include "nodes.h"
 #include "polygons.h"
+#include "color.h"
 
 int readBlock(Block* block) {
   /* Read block from path */
@@ -141,10 +142,13 @@ void writeBlock(Block* block) {
   free(bitblock);
 }
 
-void printBlock(Block* block) {
+void printBlock(Block* block, Color* spectrum) {
   int i, j;
   printf("P6\n%d %d\n255\n", CELL, CELL);
   for(j=(CELL-1);j>=0;j--)
     for(i=0;i<CELL;i++)
-      printf("%c%c%c", block->block[i*CELL+j], block->block[i*CELL+j], block->block[i*CELL+j]);
+      printf("%c%c%c", 
+        spectrum[block->block[i*CELL+j]].r,
+        spectrum[block->block[i*CELL+j]].g,
+	spectrum[block->block[i*CELL+j]].b);
 }

@@ -27,7 +27,7 @@ void initText(unsigned int size) {
 
 void drawLine(
   double* X, double* Y, Block* block, 
-  Linetype lty, unsigned char lwd, Color color
+  Linetype lty, unsigned char lwd, unsigned char color
 ) {
   int x0 = floor((double)CELL*(X[0]-block->xlim[0]) / block->depth);
   int x1 = floor((double)CELL*(X[1]-block->xlim[0]) / block->depth);
@@ -57,7 +57,7 @@ void drawLine(
 
 void drawPolygon(
   Polygon* polygon, Block* block, 
-  Linetype lty, unsigned char lwd, Color color
+  Linetype lty, unsigned char lwd, unsigned char color
 ) { 
   unsigned int i, j;
   double x[2];
