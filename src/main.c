@@ -123,11 +123,11 @@ void interpolate(int argc, char** argv) {
   /* Model fitting/prediction */
   Model model;
   fit(&features, &model, EXPONENTIAL);
-  predict(&block, &model);
+  predict(&block, &model, 255);
 
   /* Print to stdout */
-  Color* spectrum = (Color*)malloc(sizeof(Color)*256);
-  heatcolors(spectrum, 256);
+  Color* spectrum = (Color*)malloc(sizeof(Color)*(255+1));
+  heatcolors(spectrum, 255);
   printBlock(&block, spectrum);
 
   /* Dealloc */

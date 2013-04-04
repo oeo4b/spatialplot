@@ -94,7 +94,7 @@ void fit(Features* training, Model* model, Variogram type) {
     free(cov[i]);
 }
 
-void predict(Block* block, Model* model) {
+void predict(Block* block, Model* model, unsigned int groups) {
   unsigned int i, j, k;
   unsigned int n = model->training->n;
   double** var = (double**)malloc(sizeof(double*)*(n+1));
@@ -136,7 +136,7 @@ void predict(Block* block, Model* model) {
       z = (z-zmin)/zrange; /* Standardize estimate */
       if(z<0) z = 0;
       if(z>1) z = 1;
-      block->block[i*CELL+j] = 1+floor(z*254.0);
+      block->block[i*CELL+j] = 1+floor(z*(groups-1)+0.5);
     }
 
   /* Dealloc */

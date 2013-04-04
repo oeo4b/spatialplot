@@ -31,6 +31,6 @@ double spherical(double, Model*);
 double gaussian(double, Model*);
 double exponential(double, Model*);
 void fit(Features*, Model*, Variogram);
-void predict(Block*, Model*);
+void predict(Block*, Model*, unsigned int);
 
 #endif
