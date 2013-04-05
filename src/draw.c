@@ -14,11 +14,19 @@ static unsigned int dashed = 0;
 FT_Library library;
 FT_Face face;
 
-void initText(unsigned int size) {
+void initText(unsigned int size, const char* font) {
   int error;
+  char text[100];
   error = FT_Init_FreeType(&library);
   if(error) return;
-  error = FT_New_Face(library, "/usr/openwin/lib/X11/fonts/TrueType/Arial.ttf", 0, &face);
+#ifdef __unix
+  sprintf(text, "/usr/openwin/lib/X11/fonts/TrueType/%s.ttf", font);
+#elif __linux__
+  sprintf(text, "/usr/openwin/lib/X11/fonts/TrueType/%s.ttf", font);
+#elif __APPLE__
+  sprintf(text, "/Library/Fonts/%s.ttf", font);
+#endif
+  error = FT_New_Face(library, text, 0, &face);
   if(error) return;
   error = FT_Set_Char_Size(face, 0, size*64, CELL, CELL);   
   if(error) return;

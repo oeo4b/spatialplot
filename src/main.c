@@ -63,7 +63,7 @@ void layer(int argc, char** argv) {
   Node root;
   readNodes(&root, file, 3);
   ytransNodes(&root);
-  initText(4);
+  initText(4, "Arial");
   bindLabels(&root, &block, 10);
 
   /* Draw polygons to block */

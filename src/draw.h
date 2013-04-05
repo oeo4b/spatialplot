@@ -10,7 +10,7 @@ typedef enum {
   DOTTED
 } Linetype;
 
-void initText(unsigned int);
+void initText(unsigned int, const char*);
 void drawLine(double*, double*, Block*, Linetype, unsigned char, unsigned char);
 void drawPolygon(Polygon*, Block*, Linetype, unsigned char, unsigned char);
 void drawPolygons(Node*, Block*, unsigned int);
