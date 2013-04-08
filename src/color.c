@@ -91,6 +91,3 @@ void terraincolors(Color* spectrum, unsigned int n) {
   spectrum[0].b = 255;  
 }
 
-void rainbowcolors(Color* spectrum, unsigned int n) {
-
-}

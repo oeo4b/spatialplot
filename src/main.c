@@ -28,7 +28,7 @@ void readFeatures(Features* features, FILE* stream) {
 }
 
 void help(void) {
-  printf("usage: spatialplot [--version] [--help] <command> [<args>]\n\n"
+  printf("Usage: spatialplot [--version] [--help] <command> [<args>]\n\n"
          "Commands:\n"
          "  layer        Create map block layer\n"
 	 "  interpolate  Interpolate spatial data and project to block\n");
@@ -37,7 +37,7 @@ void help(void) {
 void layer(int argc, char** argv) {
   if(argc<5) {
     printf("You must specify the block properties.\n\n"
-           "usage: spatialplot layer <level> <x> <y>\n");
+           "Usage: spatialplot layer <level> <x> <y>\n");
     return;
   }
 
@@ -85,7 +85,15 @@ void layer(int argc, char** argv) {
 void interpolate(int argc, char** argv) {
   if(argc<6) {
     printf("You must specify the block properties.\n\n"
-           "usage: spatialplot interpolate <level> <x> <y> <n> [<model>]\n");
+           "Usage: spatialplot interpolate <level> <x> <y> <n> [<options>]\n\n"
+           "Options:\n"
+           "  --model=TYPE     Specify the variogram model TYPE; possible values\n"
+           "                   are 'linear', 'spherical', 'gaussian' or\n"
+           "                   'exponential'(default)\n"
+           "  --color=PALETTE  Choose from a color PALETTE; possible values are\n"
+           "                   'grey'(default), 'heat', 'terrain' or 'cm'\n"
+           "  --categ=VALUES   For categorical variables, specify the total number\n"
+           "                   of possible VALUES\n");
     return;
   }
 
@@ -120,14 +128,36 @@ void interpolate(int argc, char** argv) {
     features.X[i] = (double*)malloc(sizeof(double)*features.n);
   readFeatures(&features, stdin);
   
-  /* Model fitting/prediction */
+  /* Model fitting */
   Model model;
-  fit(&features, &model, EXPONENTIAL);
-  predict(&block, &model, 255);
+  Variogram variogram = EXPONENTIAL;
+  for(i=6;i<argc;i++)
+    if(!strcmp(argv[i], "--model")&&(i+1)<argc) {
+      if(!strcmp(argv[i+1], "linear")) variogram = LINEAR;
+      if(!strcmp(argv[i+1], "spherical")) variogram = SPHERICAL;
+      if(!strcmp(argv[i+1], "gaussian")) variogram = GAUSSIAN;
+      if(!strcmp(argv[i+1], "exponential")) variogram = EXPONENTIAL;
+    }
+  fit(&features, &model, variogram);
+
+  /* Model prediction */
+  unsigned int categories = 255;
+  for(i=6;i<argc;i++)
+    if(!strcmp(argv[i], "--categ")&&(i+1)<argc)
+      categories = atoi(argv[i+1]);
+  predict(&block, &model, categories);
 
   /* Print to stdout */
-  Color* spectrum = (Color*)malloc(sizeof(Color)*(255+1));
-  heatcolors(spectrum, 255);
+  Color* spectrum = (Color*)malloc(sizeof(Color)*(categories+1));
+  void (*palette)(Color*, unsigned int) = &greycolors;
+  for(i=6;i<argc;i++)
+    if(!strcmp(argv[i], "--color")&&(i+1)<argc) {
+      if(!strcmp(argv[i+1], "grey")) palette = &greycolors;
+      if(!strcmp(argv[i+1], "heat")) palette = &heatcolors;
+      if(!strcmp(argv[i+1], "terrain")) palette = &terraincolors;
+      if(!strcmp(argv[i+1], "cm")) palette = &cmcolors;
+    }
+  palette(spectrum, categories);
   printBlock(&block, spectrum);
 
   /* Dealloc */
@@ -137,7 +167,7 @@ void interpolate(int argc, char** argv) {
 int main(int argc, char** argv) {
   /* Version */
   int major = 1;
-  int minor = 0;
+  int minor = 1;
   int build = 1;
 
   if(argc<2)
@@ -151,7 +181,7 @@ int main(int argc, char** argv) {
   else if(!strcmp(argv[1], "interpolate"))
     interpolate(argc, argv);
   else
-    printf("git: '%s' is not a spatialplot command. See 'spatialplot --help'.\n", argv[1]);
+    printf("spatialplot: '%s' is not a spatialplot command. See 'spatialplot --help'.\n", argv[1]);
 
   return 0;
 }

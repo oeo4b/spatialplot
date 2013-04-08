@@ -11,6 +11,5 @@ void greycolors(Color*, unsigned int);
 void heatcolors(Color*, unsigned int);
 void cmcolors(Color*, unsigned int);
 void terraincolors(Color*, unsigned int);
-void rainbowcolors(Color*, unsigned int);
 
 #endif
