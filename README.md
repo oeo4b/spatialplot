@@ -4,6 +4,7 @@ spatialplot is mapping platform that generates fixed size block images given a s
 
 # Examples
 ![Europe_Heat](https://raw.github.com/oeo4b/spatialplot/master/examples/heat_discrete.png)
+&nbsp;
 ![Europe_Political](https://raw.github.com/oeo4b/spatialplot/master/examples/europe_layer.png)
 
 ## Installation
