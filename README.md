@@ -1,13 +1,15 @@
 # spatialplot
 
-spatialplot is mapping platform that generates fixed size block images given a set of map features. 
-
-## Examples
 ![Europe_Heat](https://raw.github.com/oeo4b/spatialplot/master/examples/heat_discrete.png)
 &nbsp;
 ![Europe_Political](https://raw.github.com/oeo4b/spatialplot/master/examples/europe_layer.png)
 &nbsp;
 ![America_Terrain](https://raw.github.com/oeo4b/spatialplot/master/examples/terrain_continuous.png)
+
+spatialplot is a mapping program that generates fixed size images given a set of map features. The motivation behind spatialplot was to create a modular, dynamic and optimal program that could render images using a tree data structure (i.e. features) to represent geographical information.
+
+The two main functions of spatialplot are interpolation and layering. 
+
 
 ## Features
 
