@@ -6,10 +6,7 @@
 &nbsp;
 ![America_Terrain](https://raw.github.com/oeo4b/spatialplot/master/examples/terrain_continuous.png)
 
-spatialplot is a mapping program that generates fixed size images given a set of map features. The motivation behind spatialplot was to create a modular, dynamic and optimal program that could render images using a tree data structure (i.e. features) to represent geographical information.
-
-The two main functions of spatialplot are interpolation and layering. 
-
+spatialplot is a mapping program that generates fixed size images given a set of map features. The motivation behind spatialplot was to create a modular, dynamic and optimal program that would use user-defined spatial data to perform interpolation and layering of map features.
 
 ## Features
 
